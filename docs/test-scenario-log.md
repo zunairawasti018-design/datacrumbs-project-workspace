@@ -4,41 +4,40 @@
 The mid-stage validation exercise tested the project-planning workflow using representative task scenarios, with focus on authentication, validation, and resource ownership.
 
 ## 2. Core scenarios executed
-### Scenario A: Valid authenticated task creation
-- User is authenticated via Supabase auth
+### Scenario A: Valid task payload validation
 - Request body includes a valid week (1-4) and a non-empty title
-- Expected result: `201 Created` and the new record is returned
-- Status: Pass
+- Expected result: schema accepts the payload and trims its title
+- Status: Pass at schema level; authenticated database insertion is not covered by the current automated tests
 
 ### Scenario B: Unauthenticated access
 - Request is made without a valid session
 - Expected result: `401 Unauthorized`
-- Status: Pass
+- Status: Pass for task reads and creation in mocked API route tests
 
 ### Scenario C: Invalid week range
 - Payload uses `week: 0` or `week: 5`
-- Expected result: schema validation fails with `400`
-- Status: Pass
+- Expected result: schema validation rejects the payload
+- Status: Pass at schema level
 
 ### Scenario D: Empty or oversized title
 - Payload uses whitespace-only label or title longer than 120 chars
 - Expected result: validation fails before database insert
-- Status: Pass
+- Status: Pass at schema level
 
 ### Scenario E: Partial update validation
 - Payload contains only `completed: true` or only a revised title
 - Expected result: update schema accepts the request
-- Status: Pass
+- Status: Pass at schema level
 
 ### Scenario F: Empty update payload
 - Payload is `{}` or a malformed update object
 - Expected result: update validation rejects the request
-- Status: Pass
+- Status: Pass at schema level; malformed update is also rejected by the API route test
 
 ### Scenario G: Read-only ownership enforcement
 - Authenticated user requests tasks for account A while task records belong to account B
 - Expected result: only account A records are returned
-- Status: Pass based on app-level filtering and RLS design
+- Status: Not run against two users; app-level filtering and RLS are present, but live ownership enforcement needs staging verification
 
 ## 3. Sample test data
 ```json
@@ -65,6 +64,8 @@ npm test
 ```
 
 Current result: 11/11 tests passed.
+
+The pass rate covers automated schema and mocked route checks only. See [pilot execution data](pilot-execution-data.md) for the segment breakdown and the outstanding live Supabase checks.
 
 ## 5. Observations
 - The validation layer is effective for the initial release scope.
