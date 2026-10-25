@@ -20,6 +20,10 @@ The application uses strict TypeScript and Tailwind CSS utilities alongside its 
 - [Pilot execution data](docs/pilot-execution-data.md)
 - [SLA and QA checklist](docs/sla-checklist.md)
 - [Test scenario log](docs/test-scenario-log.md)
+- [Standard operating procedures and training handoff](docs/standard-operating-procedures.md)
+- [Portfolio case study and executive summary](docs/portfolio-case-study.md)
+- [Executive presentation deck](docs/executive-presentation-deck.md)
+- [3–5 minute demo video script](docs/demo-video-script.md)
 
 The documented pilot pass rate is based on automated tests with synthetic data. Live Supabase and runtime SLA results still require staging/production measurement.
 
